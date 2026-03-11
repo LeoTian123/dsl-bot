@@ -1,0 +1,6 @@
+{
+    "markdown.copyFiles.destination": {
+        "**/*.md": "${documentDirName}/img/"
+    },
+    "markdown.copyFiles.overwriteBehavior": "nameIncrementally"
+}
