@@ -1,0 +1,53 @@
+NPC_name: 产品客服机器人
+
+start_state: greet
+end_state:
+  - default_end
+  - phone_detail
+  - pc_detail
+  - tablet_detail
+  - repair
+  - return_exchange
+
+states:
+  greet:
+    output: "欢迎使用客服机器人！您想咨询产品信息还是售后服务？"
+    options:
+      产品信息: product
+      售后服务: service
+
+  product: 
+    output: "您想了解什么产品？"
+    options:
+      手机: phone_detail
+      电脑: pc_detail
+      平板: tablet_detail
+      返回: greet
+  
+  phone_detail:
+    output: "此处是测试的一个结尾，序号是1。"
+    options: {}
+  pc_detail:
+    output: "此处是测试的一个结尾，序号是2。"
+    options: {}
+  tablet_detail:
+    output: "此处是测试的一个结尾，序号是3。"
+    options: {}
+
+  service: 
+    output: "请问您需要哪项服务？"
+    options:
+      维修: repair
+      退换货: return_exchange
+      返回: greet
+
+  repair:
+    output: "此处是测试的一个结尾，序号是4。"
+    options: {}
+  return_exchange:
+    output: "此处是测试的一个结尾，序号是5。"
+    options: {}
+
+  default_end: 
+    output: "对话已结束，感谢您的使用！"
+    options: {}

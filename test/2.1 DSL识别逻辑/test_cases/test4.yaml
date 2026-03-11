@@ -1,0 +1,329 @@
+NPC_name: 抽象逻辑迷宫机器人B
+
+start_state: nexus
+end_state:
+  - default_end
+  - exit_p1
+  - exit_p2
+  - exit_p3
+  - exit_p4
+  - exit_p5
+  - exit_p6
+  - exit_p7
+  - exit_p8
+  - exit_p9
+  - exit_p10
+  - exit_p11
+  - exit_p12
+  - exit_p13
+  - exit_p14
+
+states:
+  nexus:
+    output: "欢迎进入逻辑迷宫B。选择数字1-4进入对应象限。"
+    options:
+      1: quad1
+      2: quad2
+      3: quad3
+      4: quad4
+      退出: default_end
+
+  quad1:
+    output: "象限1：布尔逻辑区。选择真/假门。（标记：Q1）"
+    options:
+      真: true_Q1
+      假: false_Q1
+      返回: nexus
+
+  quad2:
+    output: "象限2：数值计算区。选择奇/偶门。（标记：Q2）"
+    options:
+      奇: odd_Q2
+      偶: even_Q2
+      返回: nexus
+
+  quad3:
+    output: "象限3：序列记忆区。选择升/降门。（标记：Q3）"
+    options:
+      升序: asc_Q3
+      降序: desc_Q3
+      返回: nexus
+
+  quad4:
+    output: "象限4：颜色推理区。选择主/补门。（标记：Q4）"
+    options:
+      主色: primary_Q4
+      补色: complement_Q4
+      返回: nexus
+
+  true_Q1:
+    output: "真门后：AND与OR分叉。（Q1-T）"
+    options:
+      AND: and_Q1T
+      OR: or_Q1T
+      后退: quad1
+
+  false_Q1:
+    output: "假门后：NOT与XOR分叉。（Q1-F）"
+    options:
+      NOT: not_Q1F
+      XOR: xor_Q1F
+      后退: quad1
+
+  and_Q1T:
+    output: "AND室：需两真才开。模拟输入第二条件。（Q1T-A）"
+    options:
+      真: and_true_Q1TA
+      假: and_false_Q1TA
+      后退: true_Q1
+
+  or_Q1T:
+    output: "OR室：任一真即开。模拟输入第二条件。（Q1T-O）"
+    options:
+      真: or_true_Q1TO
+      假: or_false_Q1TO
+      后退: true_Q1
+
+  not_Q1F:
+    output: "NOT室：反转当前状态。当前为假→真。（Q1F-N）"
+    options:
+      继续: not_flip_Q1FN
+      后退: false_Q1
+
+  not_flip_Q1FN:
+    output: "状态已翻转为真。进入NAND路径。（Q1FN→T）"
+    options:
+      进入: exit_p1
+      后退: not_Q1F
+
+  xor_Q1F:
+    output: "XOR室：不同则开。模拟输入第二条件。（Q1F-X）"
+    options:
+      真: xor_true_Q1FX
+      假: xor_false_Q1FX
+      后退: false_Q1
+
+  and_true_Q1TA:
+    output: "AND双真：门开，通往p2。（Q1TA→TT）"
+    options:
+      进入: exit_p2
+      后退: and_Q1T
+
+  and_false_Q1TA:
+    output: "AND有假：门锁，需重选。（Q1TA→TF）"
+    options:
+      后退: and_Q1T
+
+  or_true_Q1TO:
+    output: "OR任真：门开，通往p3。（Q1TO→TT/TF）"
+    options:
+      进入: exit_p3
+      后退: or_Q1T
+
+  or_false_Q1TO:
+    output: "OR双假：门锁，需重选。（Q1TO→FF）"
+    options:
+      后退: or_Q1T
+
+  xor_true_Q1FX:
+    output: "XOR不同：门开，通往p4。（Q1FX→FT）"
+    options:
+      进入: exit_p4
+      后退: xor_Q1F
+
+  xor_false_Q1FX:
+    output: "XOR相同：门锁，需重选。（Q1FX→FF）"
+    options:
+      后退: xor_Q1F
+
+  odd_Q2:
+    output: "奇数区：输入一个数模3。（Q2-O）"
+    options:
+      余0: mod0_Q2O
+      余1: mod1_Q2O
+      余2: mod2_Q2O
+      后退: quad2
+
+  even_Q2:
+    output: "偶数区：输入一个数模4。（Q2-E）"
+    options:
+      余0: mod0_Q2E
+      余2: mod2_Q2E
+      后退: quad2
+
+  mod0_Q2O:
+    output: "奇数模3余0：通往素数检查。（Q2O-0）"
+    options:
+      检查3: prime3_Q2O0
+      检查9: prime9_Q2O0
+      后退: odd_Q2
+
+  mod1_Q2O:
+    output: "奇数模3余1：直接p5。（Q2O-1）"
+    options:
+      进入: exit_p5
+      后退: odd_Q2
+
+  prime3_Q2O0:
+    output: "3是素数：开启p6。（Q2O0-3）"
+    options:
+      进入: exit_p6
+      后退: mod0_Q2O
+
+  prime9_Q2O0:
+    output: "9非素数：返回。（Q2O0-9）"
+    options:
+      后退: mod0_Q2O
+
+  mod0_Q2E:
+    output: "偶数模4余0：通往平方检查。（Q2E-0）"
+    options:
+      检查4: sq4_Q2E0
+      检查16: sq16_Q2E0
+      后退: even_Q2
+
+  mod2_Q2E:
+    output: "偶数模4余2：直接p7。（Q2E-2）"
+    options:
+      进入: exit_p7
+      后退: even_Q2
+
+  sq4_Q2E0:
+    output: "4是平方：开启p8。（Q2E0-4）"
+    options:
+      进入: exit_p8
+      后退: mod0_Q2E
+
+  sq16_Q2E0:
+    output: "16是平方：开启p9。（Q2E0-16）"
+    options:
+      进入: exit_p9
+      后退: mod0_Q2E
+
+  asc_Q3:
+    output: "升序区：记忆序列A<B<C。选择缺失项。（Q3-A）"
+    options:
+      插入B: insertB_Q3A
+      插入D: insertD_Q3A
+      后退: quad3
+
+  desc_Q3:
+    output: "降序区：记忆序列X>Y>Z。选择缺失项。（Q3-D）"
+    options:
+      插入Y: insertY_Q3D
+      插入W: insertW_Q3D
+      后退: quad3
+
+  insertB_Q3A:
+    output: "正确插入B：序列完整，p10。（Q3A-B）"
+    options:
+      进入: exit_p10
+      后退: asc_Q3
+
+  insertD_Q3A:
+    output: "错误插入D：序列错乱，回象限3。"
+    options:
+      后退: quad3
+
+  insertY_Q3D:
+    output: "正确插入Y：序列完整，p11。（Q3D-Y）"
+    options:
+      进入: exit_p11
+      后退: desc_Q3
+
+  insertW_Q3D:
+    output: "错误插入W：序列错乱，回象限3。"
+    options:
+      后退: quad3
+
+  primary_Q4:
+    output: "主色区：红黄蓝。选择互补对。（Q4-P）"
+    options:
+      红-绿: rg_Q4P
+      红-蓝: rb_Q4P
+      后退: quad4
+
+  complement_Q4:
+    output: "补色区：绿橙紫。选择原色对。（Q4-C）"
+    options:
+      绿-红: gr_Q4C
+      紫-黄: py_Q4C
+      后退: quad4
+
+  rg_Q4P:
+    output: "红-绿正确：开启p12。（Q4P-RG）"
+    options:
+      进入: exit_p12
+      后退: primary_Q4
+
+  rb_Q4P:
+    output: "红-蓝错误：颜色冲突，回象限4。"
+    options:
+      后退: quad4
+
+  gr_Q4C:
+    output: "绿-红正确：开启p13。（Q4C-GR）"
+    options:
+      进入: exit_p13
+      后退: complement_Q4
+
+  py_Q4C:
+    output: "紫-黄错误：颜色冲突，回象限4。"
+    options:
+      后退: quad4
+
+  exit_p1:
+    output: "此处是测试的一个结尾，序号是B1：出口P1（NOT翻转）。"
+    options: {}
+
+  exit_p2:
+    output: "此处是测试的一个结尾，序号是B2：出口P2（AND双真）。"
+    options: {}
+
+  exit_p3:
+    output: "此处是测试的一个结尾，序号是B3：出口P3（OR任真）。"
+    options: {}
+
+  exit_p4:
+    output: "此处是测试的一个结尾，序号是B4：出口P4（XOR不同）。"
+    options: {}
+
+  exit_p5:
+    output: "此处是测试的一个结尾，序号是B5：出口P5（奇数模3余1）。"
+    options: {}
+
+  exit_p6:
+    output: "此处是测试的一个结尾，序号是B6：出口P6（3是素数）。"
+    options: {}
+
+  exit_p7:
+    output: "此处是测试的一个结尾，序号是B7：出口P7（偶数模4余2）。"
+    options: {}
+
+  exit_p8:
+    output: "此处是测试的一个结尾，序号是B8：出口P8（4是平方）。"
+    options: {}
+
+  exit_p9:
+    output: "此处是测试的一个结尾，序号是B9：出口P9（16是平方）。"
+    options: {}
+
+  exit_p10:
+    output: "此处是测试的一个结尾，序号是B10：出口P10（升序插入B）。"
+    options: {}
+
+  exit_p11:
+    output: "此处是测试的一个结尾，序号是B11：出口P11（降序插入Y）。"
+    options: {}
+
+  exit_p12:
+    output: "此处是测试的一个结尾，序号是B12：出口P12（红-绿互补）。"
+    options: {}
+
+  exit_p13:
+    output: "此处是测试的一个结尾，序号是B13：出口P13（绿-红互补）。"
+    options: {}
+
+  default_end:
+    output: "对话已结束，感谢您的使用！"
+    options: {}

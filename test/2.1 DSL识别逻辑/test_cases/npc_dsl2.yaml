@@ -1,0 +1,57 @@
+NPC_name: 产品客服机器人
+start_state: greet
+end_state:
+  - func11
+  - func12
+  - func2
+  - func3e
+
+states:
+  greet:
+    output: "向着星辰与深渊！欢迎来到冒险家协会。"
+    options:
+      你是？: intro1
+      冒险家协会是做什么的？: intro2
+      领取每日委托: func1
+      查看我的冒险等阶: func2
+      查看我的探索派遣: func3
+  intro1:
+    output: "我吗？我是冒险家协会的接待员凯瑟琳。专门负责为蒙德的冒险家们提供任务发布和情报支援工作。顺带一提，冒险家协会的服务全年无休喔。"
+    options:
+      原来如此: greet
+  intro2:
+    output: "冒险家协会是为了七国各地的冒险家们所设立的支援组织。为了让新手冒险家们更好地适应冒险生活，老手冒险家们能够更自由地进行冒险，协会负责整合起冒险家们口口相传的繁杂信息，将合适的冒险任务分配到冒险家的手中。"
+    options:
+      原来如此: greet
+
+  func1:
+    output: "您完成每日委托了吗？"
+    options:
+     完成了: func11
+     我现在去...: func12
+  func11:
+    output: "这是您的奖励，请收好！"
+    options: {}
+  func12:
+    output: "等您回来！"
+    options: {}
+
+  func2:
+    output: "我不记得了哦~这里是记录，您请自行查询吧~"
+    options: {}
+
+  func3:
+    output: "您要查看哪个地区的探索派遣？"
+    options:
+      蒙德: func3e
+      璃月: func3e
+      稻妻: func3e
+      须弥: func3e
+      枫丹: func3e
+      纳塔: func3e
+      挪德卡莱: func3e
+
+  func3e:
+    output: "这是您的探索奖励，请收好！"
+    options: {}
+

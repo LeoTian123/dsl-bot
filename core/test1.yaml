@@ -1,0 +1,321 @@
+NPC_name: 旅游行程规划机器人
+
+start_state: welcome
+end_state:
+  - default_end
+  - hotel_book
+  - flight_confirm
+  - attraction_ticket
+  - restaurant_reserve
+  - budget_summary
+  - itinerary_complete
+
+states:
+  welcome:
+    output: "欢迎来到旅游规划机器人！您是想规划国内旅行还是国际旅行？"
+    options:
+      国内旅行: domestic
+      国际旅行: international
+      退出: default_end
+
+  domestic:
+    output: "请选择国内目的地城市？"
+    options:
+      北京: beijing
+      上海: shanghai
+      广州: guangzhou
+      返回: welcome
+
+  international:
+    output: "请选择国际目的地国家？"
+    options:
+      日本: japan
+      美国: usa
+      法国: france
+      返回: welcome
+
+  beijing:
+    output: "北京行程规划：您想先安排交通、住宿还是景点？（已记录目的地：北京）"
+    options:
+      交通: transport_beijing
+      住宿: hotel_beijing
+      景点: attraction_beijing
+      返回: domestic
+
+  shanghai:
+    output: "上海行程规划：您想先安排交通、住宿还是景点？（已记录目的地：上海）"
+    options:
+      交通: transport_shanghai
+      住宿: hotel_shanghai
+      景点: attraction_shanghai
+      返回: domestic
+
+  guangzhou:
+    output: "广州行程规划：您想先安排交通、住宿还是景点？（已记录目的地：广州）"
+    options:
+      交通: transport_guangzhou
+      住宿: hotel_guangzhou
+      景点: attraction_guangzhou
+      返回: domestic
+
+  japan:
+    output: "日本行程规划：您想先安排交通、住宿还是景点？（已记录目的地：日本）"
+    options:
+      交通: transport_japan
+      住宿: hotel_japan
+      景点: attraction_japan
+      返回: international
+
+  usa:
+    output: "美国行程规划：您想先安排交通、住宿还是景点？（已记录目的地：美国）"
+    options:
+      交通: transport_usa
+      住宿: hotel_usa
+      景点: attraction_usa
+      返回: international
+
+  france:
+    output: "法国行程规划：您想先安排交通、住宿还是景点？（已记录目的地：法国）"
+    options:
+      交通: transport_france
+      住宿: hotel_france
+      景点: attraction_france
+      返回: international
+
+  transport_beijing:
+    output: "北京交通：推荐高铁或飞机。您确认航班预订吗？（目的地：北京）"
+    options:
+      是: flight_confirm
+      否: beijing
+      切换安排: beijing
+
+  transport_shanghai:
+    output: "上海交通：推荐高铁或飞机。您确认航班预订吗？（目的地：上海）"
+    options:
+      是: flight_confirm
+      否: shanghai
+      切换安排: shanghai
+
+  transport_guangzhou:
+    output: "广州交通：推荐高铁或飞机。您确认航班预订吗？（目的地：广州）"
+    options:
+      是: flight_confirm
+      否: guangzhou
+      切换安排: guangzhou
+
+  transport_japan:
+    output: "日本交通：推荐国际航班。您确认航班预订吗？（目的地：日本）"
+    options:
+      是: flight_confirm
+      否: japan
+      切换安排: japan
+
+  transport_usa:
+    output: "美国交通：推荐国际航班。您确认航班预订吗？（目的地：美国）"
+    options:
+      是: flight_confirm
+      否: usa
+      切换安排: usa
+
+  transport_france:
+    output: "法国交通：推荐国际航班。您确认航班预订吗？（目的地：法国）"
+    options:
+      是: flight_confirm
+      否: france
+      切换安排: france
+
+  hotel_beijing:
+    output: "北京住宿：推荐五星酒店。您现在预订吗？（目的地：北京）"
+    options:
+      是: hotel_book
+      否: beijing
+      查看预算: budget_check_beijing
+
+  hotel_shanghai:
+    output: "上海住宿：推荐五星酒店。您现在预订吗？（目的地：上海）"
+    options:
+      是: hotel_book
+      否: shanghai
+      查看预算: budget_check_shanghai
+
+  hotel_guangzhou:
+    output: "广州住宿：推荐五星酒店。您现在预订吗？（目的地：广州）"
+    options:
+      是: hotel_book
+      否: guangzhou
+      查看预算: budget_check_guangzhou
+
+  hotel_japan:
+    output: "日本住宿：推荐温泉旅馆。您现在预订吗？（目的地：日本）"
+    options:
+      是: hotel_book
+      否: japan
+      查看预算: budget_check_japan
+
+  hotel_usa:
+    output: "美国住宿：推荐连锁酒店。您现在预订吗？（目的地：美国）"
+    options:
+      是: hotel_book
+      否: usa
+      查看预算: budget_check_usa
+
+  hotel_france:
+    output: "法国住宿：推荐精品酒店。您现在预订吗？（目的地：法国）"
+    options:
+      是: hotel_book
+      否: france
+      查看预算: budget_check_france
+
+  attraction_beijing:
+    output: "北京景点：故宫、天安门。您购买门票吗？（目的地：北京）"
+    options:
+      是: attraction_ticket
+      否: beijing
+      安排餐饮: restaurant_beijing
+
+  attraction_shanghai:
+    output: "上海景点：外滩、迪士尼。您购买门票吗？（目的地：上海）"
+    options:
+      是: attraction_ticket
+      否: shanghai
+      安排餐饮: restaurant_shanghai
+
+  attraction_guangzhou:
+    output: "广州景点：广州塔、陈家祠。您购买门票吗？（目的地：广州）"
+    options:
+      是: attraction_ticket
+      否: guangzhou
+      安排餐饮: restaurant_guangzhou
+
+  attraction_japan:
+    output: "日本景点：东京塔、京都寺庙。您购买门票吗？（目的地：日本）"
+    options:
+      是: attraction_ticket
+      否: japan
+      安排餐饮: restaurant_japan
+
+  attraction_usa:
+    output: "美国景点：自由女神像、大峡谷。您购买门票吗？（目的地：美国）"
+    options:
+      是: attraction_ticket
+      否: usa
+      安排餐饮: restaurant_usa
+
+  attraction_france:
+    output: "法国景点：埃菲尔铁塔、卢浮宫。您购买门票吗？（目的地：法国）"
+    options:
+      是: attraction_ticket
+      否: france
+      安排餐饮: restaurant_france
+
+  restaurant_beijing:
+    output: "北京餐饮：推荐烤鸭店。您现在预订吗？（目的地：北京）"
+    options:
+      是: restaurant_reserve
+      否: attraction_beijing
+      返回主规划: beijing
+
+  restaurant_shanghai:
+    output: "上海餐饮：推荐小笼包店。您现在预订吗？（目的地：上海）"
+    options:
+      是: restaurant_reserve
+      否: attraction_shanghai
+      返回主规划: shanghai
+
+  restaurant_guangzhou:
+    output: "广州餐饮：推荐早茶餐厅。您现在预订吗？（目的地：广州）"
+    options:
+      是: restaurant_reserve
+      否: attraction_guangzhou
+      返回主规划: guangzhou
+
+  restaurant_japan:
+    output: "日本餐饮：推荐寿司店。您现在预订吗？（目的地：日本）"
+    options:
+      是: restaurant_reserve
+      否: attraction_japan
+      返回主规划: japan
+
+  restaurant_usa:
+    output: "美国餐饮：推荐牛排馆。您现在预订吗？（目的地：美国）"
+    options:
+      是: restaurant_reserve
+      否: attraction_usa
+      返回主规划: usa
+
+  restaurant_france:
+    output: "法国餐饮：推荐米其林餐厅。您现在预订吗？（目的地：法国）"
+    options:
+      是: restaurant_reserve
+      否: attraction_france
+      返回主规划: france
+
+  budget_check_beijing:
+    output: "北京预算总结：交通+住宿+景点≈5000元。您查看完整行程吗？"
+    options:
+      是: budget_summary
+      否: hotel_beijing
+      调整安排: beijing
+
+  budget_check_shanghai:
+    output: "上海预算总结：交通+住宿+景点≈6000元。您查看完整行程吗？"
+    options:
+      是: budget_summary
+      否: hotel_shanghai
+      调整安排: shanghai
+
+  budget_check_guangzhou:
+    output: "广州预算总结：交通+住宿+景点≈4500元。您查看完整行程吗？"
+    options:
+      是: budget_summary
+      否: hotel_guangzhou
+      调整安排: guangzhou
+
+  budget_check_japan:
+    output: "日本预算总结：交通+住宿+景点≈20000元。您查看完整行程吗？"
+    options:
+      是: budget_summary
+      否: hotel_japan
+      调整安排: japan
+
+  budget_check_usa:
+    output: "美国预算总结：交通+住宿+景点≈30000元。您查看完整行程吗？"
+    options:
+      是: budget_summary
+      否: hotel_usa
+      调整安排: usa
+
+  budget_check_france:
+    output: "法国预算总结：交通+住宿+景点≈25000元。您查看完整行程吗？"
+    options:
+      是: budget_summary
+      否: hotel_france
+      调整安排: france
+
+  hotel_book:
+    output: "此处是测试的一个结尾，序号是1：酒店已预订。"
+    options: {}
+
+  flight_confirm:
+    output: "此处是测试的一个结尾，序号是2：航班已确认。"
+    options: {}
+
+  attraction_ticket:
+    output: "此处是测试的一个结尾，序号是3：景点门票已购。"
+    options: {}
+
+  restaurant_reserve:
+    output: "此处是测试的一个结尾，序号是4：餐厅已预订。"
+    options: {}
+
+  budget_summary:
+    output: "此处是测试的一个结尾，序号是5：预算总结完成。"
+    options: {}
+
+  itinerary_complete:
+    output: "此处是测试的一个结尾，序号是6：完整行程生成。"
+    options: {}
+
+  default_end:
+    output: "对话已结束，感谢您的使用！"
+    options: {}

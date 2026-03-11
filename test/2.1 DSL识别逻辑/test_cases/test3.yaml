@@ -1,0 +1,339 @@
+NPC_name: 抽象决策迷宫机器人A
+
+start_state: entry
+end_state:
+  - default_end
+  - path_alpha
+  - path_beta
+  - path_gamma
+  - path_delta
+  - path_epsilon
+  - path_zeta
+  - path_eta
+  - path_theta
+  - path_iota
+  - path_kappa
+  - path_lambda
+  - path_mu
+
+states:
+  entry:
+    output: "您已进入决策迷宫A。选择左、中、右三条路径之一。"
+    options:
+      左: left_branch
+      中: center_branch
+      右: right_branch
+      退出: default_end
+
+  left_branch:
+    output: "左路径分叉：前方有红门与蓝门。（记忆标记：L）"
+    options:
+      红门: red_L
+      蓝门: blue_L
+      返回: entry
+
+  center_branch:
+    output: "中路径分叉：前方有金门与银门。（记忆标记：C）"
+    options:
+      金门: gold_C
+      银门: silver_C
+      返回: entry
+
+  right_branch:
+    output: "右路径分叉：前方有黑门与白门。（记忆标记：R）"
+    options:
+      黑门: black_R
+      白门: white_R
+      返回: entry
+
+  red_L:
+    output: "红门后：狭窄通道，遇见镜面迷阵。（L→R）"
+    options:
+      反射左: mirror_left_RL
+      反射右: mirror_right_RL
+      后退: left_branch
+
+  blue_L:
+    output: "蓝门后：潮湿隧道，听到水声。（L→B）"
+    options:
+      顺水: water_follow_BL
+      逆水: water_against_BL
+      后退: left_branch
+
+  gold_C:
+    output: "金门后：闪光大厅，地面刻有符号。（C→G）"
+    options:
+      踩圆 to alpha: alpha_step_CG
+      踩符号 beta: beta_step_CG
+      后退: center_branch
+
+  silver_C:
+    output: "银门后：寂静长廊，墙上有旧画。（C→S）"
+    options:
+      观画左: paint_left_CS
+      观画右: paint_right_CS
+      后退: center_branch
+
+  black_R:
+    output: "黑门后：黑暗阶梯，向下盘旋。（R→K）"
+    options:
+      向下三层: down3_RK
+      向下五层: down5_RK
+      后退: right_branch
+
+  white_R:
+    output: "白门后：明亮坡道，向上延伸。（R→W）"
+    options:
+      向上两段: up2_RW
+      向上四段: up4_RW
+      后退: right_branch
+
+  mirror_left_RL:
+    output: "镜面左转：看到三扇相同小门。（RL→1）"
+    options:
+      门1: door1_RL1
+      门2: door2_RL1
+      门3: door3_RL1
+      后退: red_L
+
+  mirror_right_RL:
+    output: "镜面右转：出现旋转楼梯。（RL→2）"
+    options:
+      上楼: spiral_up_RL2
+      下楼: spiral_down_RL2
+      后退: red_L
+
+  water_follow_BL:
+    output: "顺水而行：抵达地下湖泊。（BL→F）"
+    options:
+      乘舟左岸: boat_left_BLF
+      乘舟右岸: boat_right_BLF
+      后退: blue_L
+
+  water_against_BL:
+    output: "逆水而上：发现隐藏瀑布。（BL→A）"
+    options:
+      瀑布后: behind_fall_BLA
+      绕行: bypass_BLA
+      后退: blue_L
+
+  alpha_step_CG:
+    output: "踩alpha符号：地面震动，开启升降梯。（CG→A）"
+    options:
+      进入升降梯: lift_CGA
+      忽略返回: gold_C
+
+  beta_step_CG:
+    output: "踩beta符号：墙体滑动，露出一条暗道。（CG→B）"
+    options:
+      进入暗道: tunnel_CGB
+      忽略返回: gold_C
+
+  paint_left_CS:
+    output: "左画描绘古树：树下有钥匙孔。（CS→L）"
+    options:
+      插入虚构钥匙: keyhole_CSL
+      后退: silver_C
+
+  paint_right_CS:
+    output: "右画描绘月亮：月下有三颗星。（CS→R）"
+    options:
+      按星顺序: star1_CSPR
+      按星逆序: star2_CSPR
+      后退: silver_C
+
+  down3_RK:
+    output: "下三层：抵达石室，中央石台。（RK→3）"
+    options:
+      触碰石台: pedestal_RK3
+      后退: black_R
+
+  down5_RK:
+    output: "下五层：抵达深井，井底发光。（RK→5）"
+    options:
+      跳入深井: well_RK5
+      后退: black_R
+
+  up2_RW:
+    output: "上两段：抵达露台，风很大。（RW→2）"
+    options:
+      跃向风中: leap_RW2
+      后退: white_R
+
+  up4_RW:
+    output: "上四段：抵达塔顶，雷电环绕。（RW→4）"
+    options:
+      抓住闪电: lightning_RW4
+      后退: white_R
+
+  door1_RL1:
+    output: "门1通向：路径alpha终点。（记忆链：L-R-1）"
+    options:
+      进入: path_alpha
+      后退: mirror_left_RL
+
+  door2_RL1:
+    output: "门2通向：循环回入口。（记忆链：L-R-2）"
+    options:
+      进入: entry
+      后退: mirror_left_RL
+
+  door3_RL1:
+    output: "门3通向：路径beta终点。（记忆链：L-R-3）"
+    options:
+      进入: path_beta
+      后退: mirror_left_RL
+
+  spiral_up_RL2:
+    output: "螺旋向上：抵达彩虹桥。（RL2→U）"
+    options:
+      跨越桥: path_gamma
+      后退: mirror_right_RL
+
+  spiral_down_RL2:
+    output: "螺旋向下：跌入软垫室。（RL2→D）"
+    options:
+      爬出: center_branch
+      后退: mirror_right_RL
+
+  boat_left_BLF:
+    output: "左岸上岸：发现古老祭坛。（BLF→L）"
+    options:
+      献祭虚物: path_delta
+      后退: water_follow_BL
+
+  boat_right_BLF:
+    output: "右岸上岸：看到发光蘑菇林。（BLF→R）"
+    options:
+      采摘蘑菇: mushroom_BLF
+      后退: water_follow_BL
+
+  mushroom_BLF:
+    output: "蘑菇发光：照亮隐藏路径epsilon。（记忆链：BLF-R）"
+    options:
+      进入光路: path_epsilon
+      后退: boat_right_BLF
+
+  behind_fall_BLA:
+    output: "瀑布后洞穴：墙刻密码锁。（BLA→H）"
+    options:
+      输入135: code135_BLAH
+      输入246: code246_BLAH
+      后退: water_against_BL
+
+  code135_BLAH:
+    output: "密码正确：开启通往zeta。（记忆链：BLA-135）"
+    options:
+      进入: path_zeta
+      后退: behind_fall_BLA
+
+  code246_BLAH:
+    output: "密码错误：返回瀑布。（记忆链：BLA-246）"
+    options:
+      后退: water_against_BL
+
+  lift_CGA:
+    output: "升降梯上升：抵达云端平台。（CGA→U）"
+    options:
+      跳伞离开: path_eta
+      后退: alpha_step_CG
+
+  tunnel_CGB:
+    output: "暗道前行：听到心跳声。（CGB→T）"
+    options:
+      跟随心跳: path_theta
+      后退: beta_step_CG
+
+  keyhole_CSL:
+    output: "钥匙孔转动：墙壁消失，出现iota路径。（CSL→K）"
+    options:
+      进入: path_iota
+      后退: paint_left_CS
+
+  star1_CSPR:
+    output: "按星顺序：地板下降，抵达kappa。（CSPR→1）"
+    options:
+      进入: path_kappa
+      后退: paint_right_CS
+
+  star2_CSPR:
+    output: "按星逆序：天花板打开，掉入lambda。（CSPR→2）"
+    options:
+      进入: path_lambda
+      后退: paint_right_CS
+
+  pedestal_RK3:
+    output: "石台升起：浮现mu符号。（RK3→P）"
+    options:
+      触摸mu: path_mu
+      后退: down3_RK
+
+  well_RK5:
+    output: "井底光芒：直接通向alpha。（RK5→W）"
+    options:
+      进入: path_alpha
+      后退: down5_RK
+
+  leap_RW2:
+    output: "风中飞行：降落在beta。（RW2→L）"
+    options:
+      进入: path_beta
+      后退: up2_RW
+
+  lightning_RW4:
+    output: "抓住闪电：传送到gamma。（RW4→S）"
+    options:
+      进入: path_gamma
+      后退: up4_RW
+
+  path_alpha:
+    output: "此处是测试的一个结尾，序号是A1：路径α已达。"
+    options: {}
+
+  path_beta:
+    output: "此处是测试的一个结尾，序号是A2：路径β已达。"
+    options: {}
+
+  path_gamma:
+    output: "此处是测试的一个结尾，序号是A3：路径γ已达。"
+    options: {}
+
+  path_delta:
+    output: "此处是测试的一个结尾，序号是A4：路径δ已达。"
+    options: {}
+
+  path_epsilon:
+    output: "此处是测试的一个结尾，序号是A5：路径ε已达。"
+    options: {}
+
+  path_zeta:
+    output: "此处是测试的一个结尾，序号是A6：路径ζ已达。"
+    options: {}
+
+  path_eta:
+    output: "此处是测试的一个结尾，序号是A7：路径η已达。"
+    options: {}
+
+  path_theta:
+    output: "此处是测试的一个结尾，序号是A8：路径θ已达。"
+    options: {}
+
+  path_iota:
+    output: "此处是测试的一个结尾，序号是A9：路径ι已达。"
+    options: {}
+
+  path_kappa:
+    output: "此处是测试的一个结尾，序号是A10：路径κ已达。"
+    options: {}
+
+  path_lambda:
+    output: "此处是测试的一个结尾，序号是A11：路径λ已达。"
+    options: {}
+
+  path_mu:
+    output: "此处是测试的一个结尾，序号是A12：路径μ已达。"
+    options: {}
+
+  default_end:
+    output: "对话已结束，感谢您的使用！"
+    options: {}

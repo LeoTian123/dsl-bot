@@ -1,0 +1,248 @@
+NPC_name: 健康饮食顾问机器人
+
+start_state: intro
+end_state:
+  - default_end
+  - meal_plan
+  - exercise_routine
+  - supplement_advice
+  - weight_goal
+  - allergy_check
+  - progress_report
+  - recipe_detail
+
+states:
+  intro:
+    output: "欢迎使用健康饮食顾问！您的目标是减重、增肌还是维持健康？"
+    options:
+      减重: weight_loss
+      增肌: muscle_gain
+      维持健康: maintain
+      退出: default_end
+
+  weight_loss:
+    output: "减重模式：您有饮食过敏吗？（已记录目标：减重）"
+    options:
+      有: allergy_input_loss
+      无: calorie_deficit
+      返回: intro
+
+  muscle_gain:
+    output: "增肌模式：您有饮食过敏吗？（已记录目标：增肌）"
+    options:
+      有: allergy_input_gain
+      无: protein_surplus
+      返回: intro
+
+  maintain:
+    output: "维持模式：您有饮食过敏吗？（已记录目标：维持健康）"
+    options:
+      有: allergy_input_maintain
+      无: balanced_intake
+      返回: intro
+
+  allergy_input_loss:
+    output: "请输入过敏食物（模拟记录：过敏已记）。继续减重计划？"
+    options:
+      是: calorie_deficit
+      否: allergy_check
+      切换目标: intro
+
+  allergy_input_gain:
+    output: "请输入过敏食物（模拟记录：过敏已记）。继续增肌计划？"
+    options:
+      是: protein_surplus
+      否: allergy_check
+      切换目标: intro
+
+  allergy_input_maintain:
+    output: "请输入过敏食物（模拟记录：过敏已记）。继续维持计划？"
+    options:
+      是: balanced_intake
+      否: allergy_check
+      切换目标: intro
+
+  calorie_deficit:
+    output: "减重：每日热量摄入减少500kcal。您想查看餐单吗？（目标：减重）"
+    options:
+      是: meal_loss
+      否: exercise_loss
+      检查过敏: allergy_check
+      设置体重目标: weight_goal_loss
+
+  protein_surplus:
+    output: "增肌：每日蛋白质增加至2g/kg。您想查看餐单吗？（目标：增肌）"
+    options:
+      是: meal_gain
+      否: exercise_gain
+      检查过敏: allergy_check
+      设置体重目标: weight_goal_gain
+
+  balanced_intake:
+    output: "维持：均衡宏营养比例。您想查看餐单吗？（目标：维持健康）"
+    options:
+      是: meal_maintain
+      否: exercise_maintain
+      检查过敏: allergy_check
+      设置体重目标: weight_goal_maintain
+
+  meal_loss:
+    output: "减重餐单：早餐燕麦+水果。生成完整计划吗？"
+    options:
+      是: meal_plan
+      否: calorie_deficit
+      查看食谱细节: recipe_loss
+      进度追踪: progress_loss
+
+  meal_gain:
+    output: "增肌餐单：早餐鸡蛋+全麦。生成完整计划吗？"
+    options:
+      是: meal_plan
+      否: protein_surplus
+      查看食谱细节: recipe_gain
+      进度追踪: progress_gain
+
+  meal_maintain:
+    output: "维持餐单：早餐杂粮+蔬果。生成完整计划吗？"
+    options:
+      是: meal_plan
+      否: balanced_intake
+      查看食谱细节: recipe_maintain
+      进度追踪: progress_maintain
+
+  exercise_loss:
+    output: "减重运动：有氧为主。您生成运动计划吗？（目标：减重）"
+    options:
+      是: exercise_routine
+      否: calorie_deficit
+      返回餐单: meal_loss
+
+  exercise_gain:
+    output: "增肌运动：力量训练为主。您生成运动计划吗？（目标：增肌）"
+    options:
+      是: exercise_routine
+      否: protein_surplus
+      返回餐单: meal_gain
+
+  exercise_maintain:
+    output: "维持运动：混合有氧+力量。您生成运动计划吗？（目标：维持健康）"
+    options:
+      是: exercise_routine
+      否: balanced_intake
+      返回餐单: meal_maintain
+
+  weight_goal_loss:
+    output: "减重目标：设置每周减0.5kg。确认吗？"
+    options:
+      是: weight_goal
+      否: calorie_deficit
+      调整: weight_loss
+
+  weight_goal_gain:
+    output: "增肌目标：设置每周增0.5kg。确认吗？"
+    options:
+      是: weight_goal
+      否: protein_surplus
+      调整: muscle_gain
+
+  weight_goal_maintain:
+    output: "维持目标：体重波动±1kg。确认吗？"
+    options:
+      是: weight_goal
+      否: balanced_intake
+      调整: maintain
+
+  recipe_loss:
+    output: "减重食谱：低卡沙拉配方。您需要补充剂建议吗？"
+    options:
+      是: supplement_loss
+      否: meal_loss
+      完整食谱: recipe_detail
+
+  recipe_gain:
+    output: "增肌食谱：高蛋白鸡胸餐。您需要补充剂建议吗？"
+    options:
+      是: supplement_gain
+      否: meal_gain
+      完整食谱: recipe_detail
+
+  recipe_maintain:
+    output: "维持食谱：地中海沙拉。您需要补充剂建议吗？"
+    options:
+      是: supplement_maintain
+      否: meal_maintain
+      完整食谱: recipe_detail
+
+  supplement_loss:
+    output: "减重补充：推荐绿茶提取物。确认添加吗？"
+    options:
+      是: supplement_advice
+      否: recipe_loss
+      返回计划: calorie_deficit
+
+  supplement_gain:
+    output: "增肌补充：推荐乳清蛋白粉。确认添加吗？"
+    options:
+      是: supplement_advice
+      否: recipe_gain
+      返回计划: protein_surplus
+
+  supplement_maintain:
+    output: "维持补充：推荐复合维生素。确认添加吗？"
+    options:
+      是: supplement_advice
+      否: recipe_maintain
+      返回计划: balanced_intake
+
+  progress_loss:
+    output: "减重进度：模拟已减2kg。生成报告吗？"
+    options:
+      是: progress_report
+      否: meal_loss
+      继续计划: calorie_deficit
+
+  progress_gain:
+    output: "增肌进度：模拟已增1.5kg。生成报告吗？"
+    options:
+      是: progress_report
+      否: meal_gain
+      继续计划: protein_surplus
+
+  progress_maintain:
+    output: "维持进度：体重稳定。生成报告吗？"
+    options:
+      是: progress_report
+      否: meal_maintain
+      继续计划: balanced_intake
+
+  meal_plan:
+    output: "此处是测试的一个结尾，序号是1：餐单计划生成。"
+    options: {}
+
+  exercise_routine:
+    output: "此处是测试的一个结尾，序号是2：运动 routine 生成。"
+    options: {}
+
+  supplement_advice:
+    output: "此处是测试的一个结尾，序号是3：补充剂建议完成。"
+    options: {}
+
+  weight_goal:
+    output: "此处是测试的一个结尾，序号是4：体重目标设定。"
+    options: {}
+
+  allergy_check:
+    output: "此处是测试的一个结尾，序号是5：过敏检查完成。"
+    options: {}
+
+  progress_report:
+    output: "此处是测试的一个结尾，序号是6：进度报告生成。"
+    options: {}
+
+  recipe_detail:
+    output: "此处是测试的一个结尾，序号是7：详细食谱提供。"
+    options: {}
+
+  default_end:
+    output: "对话已结束，感谢您的使用！"
+    options: {}
